@@ -30,6 +30,8 @@ public class ExplodeEnemy : MonoBehaviour
     public Transform playerTransform;
 
     private Rigidbody rb;
+    
+    private bool exploded = false;
 
 
     private void Start()
@@ -43,16 +45,18 @@ public class ExplodeEnemy : MonoBehaviour
     private void Update()
     {
         //Check to see how close the player is to the enemy
-        if (Vector3.Distance(transform.position, playerTransform.position) > enemyStats.explodeDist)
-        {
-            //Explode if player is within range
-            StartCoroutine("Explode");
-        }
+        if (Vector3.Distance(transform.position, playerTransform.position) < enemyStats.explodeDist && !exploded)
+            {
+                //Explode if player is within range
+                StartCoroutine("Explode");
+            }
     }
 
     //Explode Coroutine
     private IEnumerator Explode()
     {
+        exploded  = true;
+        
         Instantiate(enemyExplosionParticles, transform.position, Quaternion.identity);
 
         yield return new WaitForSeconds(0.2f);

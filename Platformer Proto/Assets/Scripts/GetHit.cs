@@ -9,6 +9,7 @@ public class GetHit : MonoBehaviour
 
     private bool slipping = false;
     private PlayerMovement playerMovementScript;
+    private HealthManager healthManager;
     private Rigidbody rb;
     private Transform enemy;
 
@@ -62,7 +63,9 @@ public class GetHit : MonoBehaviour
         hurt = true;
         playerMovementScript.playerStats.canMove = false;
         playerMovementScript.soundManager.PlayHitSound();
+        playerMovementScript.playerStats.health--;
         StartCoroutine("Recover");
+        Debug.Log("Got hit. Health: " + playerMovementScript.playerStats.health);
     }
     private IEnumerator Recover()
     {
